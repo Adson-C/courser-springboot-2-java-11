@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.adsonweb.course.entities.Category;
 import com.adsonweb.course.entities.Order;
 import com.adsonweb.course.entities.OrderItem;
+import com.adsonweb.course.entities.Payment;
 import com.adsonweb.course.entities.Product;
 import com.adsonweb.course.entities.User;
 import com.adsonweb.course.entities.enums.OrderStatus;
@@ -67,7 +68,7 @@ public class TestConfing implements CommandLineRunner {
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
-		Order o1 = new Order(null, Instant.parse("2021-06-01T14:17:01Z"), OrderStatus.PAID, u1);
+		Order o1 = new Order(null, Instant.parse("2021-06-01T19:53:07Z"), OrderStatus.PAID, u1);
 		Order o2 = new Order(null, Instant.parse("2021-07-02T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
 		Order o3 = new Order(null, Instant.parse("2021-07-03T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
@@ -80,6 +81,11 @@ public class TestConfing implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2021-06-01T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
 
 	}
 
